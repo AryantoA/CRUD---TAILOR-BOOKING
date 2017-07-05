@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<div class="container">
+    <%tailors.forEach(function(tailor){%>
+      <div class="col-lg-3">
+        <ul>
+            <li>ID : <%= tailor.id%></li>
+            <li>Name : <%= tailor.name%></li>
+            <button><a href="/tailors/<%= tailor.id%>">More Info</a></button>
+        </ul>
+        <%})%>
+    
+
+    </div>
+    
+</div>
+</body>
+</html>
