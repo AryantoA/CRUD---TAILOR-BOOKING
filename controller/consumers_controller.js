@@ -26,8 +26,20 @@ module.exports = {
             }
         })
         
-//    },
-//    viewUpdateAConsumer(req,res){
+    },
+    viewUpdateAConsumer(req,res){
+        var IDConsumer = req.params.id
+        Consumer.findById(IDConsumer, function(err,consumer){
+            if (err){
+                console.log(err)
+            }
+            if (consumer){
+                res.render('updateConsumer',{consumer})
+            }else {
+                res.render("No User found with that ID")
+            }
+        })
+        
 //    },
 //    viewDeleteAConsumer(req,res){
     },
@@ -41,8 +53,22 @@ module.exports = {
                 res.redirect('/Consumers/')
             }
         })
-//    },
-//    updateAConsumer(req,res){
+    },
+    updateAConsumer(req,res){
+        var IDConsumer =req.params.id
+        Consumer.findByIdAndUpdate(IDConsumer,{
+            "name": req.body.name,
+            "location" : req.body.location,
+            "email" : req.body.email,
+            "contactNumber" : req.body.contactNumber}
+        ,function(err,updateInfo){
+            if (err){
+                console.log(err)
+            } else{
+                console.log(updateInfo)
+                res.redirect('/Consumers/'+IDConsumer)
+            }
+        })
 //    },
 //    deleteAConsumer(req,res){
     }
