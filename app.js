@@ -5,6 +5,7 @@ var app = express()
 var bodyParser = require("body-parser")
 var mongoose = require('mongoose')
 var tailors = require('./routes/tailors')
+var consumers = require('./routes/consumers')
 
 var db = 'mongodb://localhost/example';
 mongoose.connect(db)
@@ -20,6 +21,7 @@ app.get('/', function (req, res) {
     res.render('index')
 })
 
+app.use('/consumers',consumers)
 app.use('/tailors',tailors)
 
 app.listen(3000, () => {

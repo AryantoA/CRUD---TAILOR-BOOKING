@@ -9,14 +9,14 @@ module.exports = {
                     if (err) {
                         res.send('error occured')
                     } else {
-                        console.log(tailors);
+                        //console.log(tailors);
                         res.render('TailorsList', {
                             tailors
                         })
                     }
                 });
         },
-        viewNewTailors(req, res) {
+        viewNewTailor(req, res) {
             res.render('newTailor', {
                 Tailor
             })

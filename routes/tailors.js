@@ -2,8 +2,9 @@ const express = require('express')
 const router = express.Router()
 const TailorController = require('../controller/tailors_controller')
 
+
 router.get('/',TailorController.viewAllTailors)
-router.get('/add',TailorController.viewNewTailors)
+router.get('/add',TailorController.viewNewTailor)
 router.get('/:id',TailorController.viewATailor)
 router.get('/update/:id',TailorController.viewUpdateATailor)
 router.get('/delete/:id',TailorController.viewDeleteATailor)

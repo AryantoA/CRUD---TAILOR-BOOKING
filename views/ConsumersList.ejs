@@ -1,0 +1,16 @@
+<div class="container">
+    <%consumers.forEach(function(consumer){%>
+      <div class="col-lg-3">
+        <ul>
+            <li>ID : <%= consumer.id%></li>
+            <li>Name : <%= consumer.name%></li>
+            <li>Location : <%= consumer.location%></li>
+            <li>Contact Number : <%= consumer.contactNumber%></li>
+            <button><a href="/consumers/<%= consumer.id%>">More Info</a></button>
+        </ul>
+        <%})%>
+    
+
+    </div>
+    
+</div>
