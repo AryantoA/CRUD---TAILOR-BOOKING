@@ -40,8 +40,19 @@ module.exports = {
             }
         })
         
-//    },
-//    viewDeleteAConsumer(req,res){
+    },
+    viewDeleteAConsumer(req,res){
+        var IDConsumer = req.params.id
+        Consumer.findById(IDConsumer, function(err,consumer){
+            if (err){
+                console.log(err)
+            }
+            if (consumer){
+                res.render('deleteConsumer',{consumer})
+            }else {
+                res.render("No User found with that ID")
+            }
+        })
     },
     newConsumer(req,res){
     var consumer = new Consumer(req.body);
@@ -69,7 +80,15 @@ module.exports = {
                 res.redirect('/Consumers/'+IDConsumer)
             }
         })
-//    },
-//    deleteAConsumer(req,res){
+    },
+    deleteAConsumer(req,res){
+        var IDConsumer = req.params.id
+        Consumer.findByIdAndRemove(IDConsumer,function(err){
+            if (err){
+                console.log(err)
+            }else{
+                res.redirect('/Consumers/')
+            }
+        })
     }
 }

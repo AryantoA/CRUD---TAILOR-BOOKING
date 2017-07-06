@@ -1,0 +1,14 @@
+<div class="container">
+     <h1>Are you sure you want to delete this Account  ? </h1>
+      <div class="col-lg-3">
+       <form action="/consumers/delete/<%= consumer.id%>" method="POST">
+        <ul>
+            <li>ID : <%= consumer.id%></li>
+            <li>Name : <%= consumer.name%></li>
+        </ul>
+        <input type="submit" value="Yes">
+        </form>
+        <button><a href="/consumers/">No</a></button>
+        
+    </div>
+</div>
