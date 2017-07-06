@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<div class="container">
+      <div class="col-lg-3">
+        <form action="/tailors/update/<%= tailor.id%>" method="POST">
+        <input type="text" name="name" placeholder="<%= tailor.name%>">
+        <input type="text" name="address" placeholder="<%= tailor.address%>">
+        <input type="submit" value="submit">
+        </form>
+    
+
+    </div>
+    
+</div>
+</body>
+</html>
