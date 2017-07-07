@@ -6,7 +6,7 @@ var bodyParser = require("body-parser")
 var mongoose = require('mongoose')
 var tailors = require('./routes/tailors')
 var consumers = require('./routes/consumers')
-
+var bookings = require('./routes/bookings')
 var db = 'mongodb://localhost/example';
 mongoose.connect(db)
 
@@ -23,7 +23,7 @@ app.get('/', function (req, res) {
 
 app.use('/consumers',consumers)
 app.use('/tailors',tailors)
-
+app.use('/bookings',bookings)
 app.listen(3000, () => {
     console.log('listening on port 3000')
 

@@ -1,0 +1,18 @@
+<button><a href="">Book Now</a></button>
+
+<div class="container">
+    <%bookings.forEach(function(booking){%>
+      <div class="col-lg-3">
+        <ul>
+            <li>Customer: <%= booking.IDConsumer%></li>
+            <li>Tailor: <%= booking.IDTailor%></li>
+            <li>Date : <%= booking.date%></li>
+            <li>Comment : <%= booking.comments%></li>
+            <button><a href="/booking/<%= booking.id%>">More Info</a></button>
+        </ul>
+        <%})%>
+    
+
+    </div>
+    
+</div>

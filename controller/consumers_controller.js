@@ -54,6 +54,7 @@ module.exports = {
             }
         })
     },
+
     newConsumer(req,res){
     var consumer = new Consumer(req.body);
         consumer.save(function(err,createdConsumerObject){
@@ -61,7 +62,7 @@ module.exports = {
                 console.log(err)
             }else{
                 console.log(createdConsumerObject)
-                res.redirect('/Consumers/')
+                res.redirect('/Consumers')
             }
         })
     },
@@ -87,7 +88,7 @@ module.exports = {
             if (err){
                 console.log(err)
             }else{
-                res.redirect('/Consumers/')
+                res.redirect('/Consumers')
             }
         })
     }

@@ -8,6 +8,36 @@ body{
 
 }
 
+.card {
+  border: 0; }
+  .card .card-title a {
+    color: #424242;
+    -webkit-transition: 0.4s;
+    -moz-transition: 0.4s;
+    -o-transition: 0.4s;
+    -ms-transition: 0.4s;
+    transition: 0.4s; }
+    .card .card-title a:hover {
+      color: #616161;
+      -webkit-transition: 0.4s;
+      -moz-transition: 0.4s;
+      -o-transition: 0.4s;
+      -ms-transition: 0.4s;
+      transition: 0.4s; }
+  .card img {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0; }
+  .card .card-block {
+    position: relative; }
+  .card .card-footer {
+    padding-bottom: 0;
+    font-size: 1.2rem; }
+    .card .card-footer:after {
+      display: block;
+      content: "";
+      clear: both; }
+    .card .card-footer .card-link {
+      color: inherit; }
 
 
 html{
