@@ -24,7 +24,7 @@ module.exports = {
 
     },
     viewATailor(req, res) {
-        var IDTailor = req.params.id
+        var IDTailor = req.params.idTailor
         Tailor.findById(IDTailor, function (err, tailor) {
             if (err) {
                 console.log(err)
@@ -36,7 +36,7 @@ module.exports = {
         })
     },
     viewUpdateATailor(req, res) {
-        var IDTailor = req.params.id
+        var IDTailor = req.params.idTailor
         Tailor.findById(IDTailor, function (err, tailor) {
             if (err) {
                 console.log(err)
@@ -48,7 +48,7 @@ module.exports = {
         })
     },
     updateATailor(req, res) {
-        var IDTailor = req.params.id
+        var IDTailor = req.params.idTailor
         Tailor.findOneAndUpdate(IDTailor, {
                 "name": req.body.name,
                 "email": req.body.email
@@ -63,7 +63,7 @@ module.exports = {
 
     },
     viewDeleteATailor(req, res) {
-        var IDTailor = req.params.id
+        var IDTailor = req.params.idTailor
         Tailor.findById(IDTailor, function (err, tailor) {
             if (err) {
                 console.log(err)
@@ -75,7 +75,7 @@ module.exports = {
         })
     },
     deleteATailor(req, res) {
-        var IDTailor = req.params.id
+        var IDTailor = req.params.idTailor
         Tailor.findByIdAndRemove(IDTailor, function (err) {
             if (err) {
                 console.log(err)
@@ -83,5 +83,14 @@ module.exports = {
                 res.redirect('/tailors')
             }
         })
+    },
+    filterTailor(req,res){
+        Tailor.find({
+        location : req.body.location,
+        priceRange : req.body.priceRange,
+        
+        }
+        )
+        
     }
 }

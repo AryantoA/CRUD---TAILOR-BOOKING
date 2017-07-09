@@ -16,4 +16,5 @@ router.post('/add',ConsumerController.newConsumer)
 router.post('/update/:id',ConsumerController.updateAConsumer)
 router.post('/delete/:id',ConsumerController.deleteAConsumer)
 
+
 module.exports = router
