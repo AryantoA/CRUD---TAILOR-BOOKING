@@ -7,7 +7,7 @@ module.exports = {
             if (err) {
                 console.log(err)
             } else {
-                res.render('TailorsList', {
+                res.render('homepage', {
                     tailors
                 })
             }
@@ -24,7 +24,7 @@ module.exports = {
 
     },
     viewATailor(req, res) {
-        var IDTailor = req.params.idTailor
+        var IDTailor = req.params.id
         Tailor.findById(IDTailor, function (err, tailor) {
             if (err) {
                 console.log(err)
@@ -36,7 +36,7 @@ module.exports = {
         })
     },
     viewUpdateATailor(req, res) {
-        var IDTailor = req.params.idTailor
+        var IDTailor = req.params.id
         Tailor.findById(IDTailor, function (err, tailor) {
             if (err) {
                 console.log(err)
@@ -48,7 +48,7 @@ module.exports = {
         })
     },
     updateATailor(req, res) {
-        var IDTailor = req.params.idTailor
+        var IDTailor = req.params.id
         Tailor.findOneAndUpdate(IDTailor, {
                 "name": req.body.name,
                 "email": req.body.email
@@ -63,7 +63,7 @@ module.exports = {
 
     },
     viewDeleteATailor(req, res) {
-        var IDTailor = req.params.idTailor
+        var IDTailor = req.params.id
         Tailor.findById(IDTailor, function (err, tailor) {
             if (err) {
                 console.log(err)
@@ -75,7 +75,7 @@ module.exports = {
         })
     },
     deleteATailor(req, res) {
-        var IDTailor = req.params.idTailor
+        var IDTailor = req.params.id
         Tailor.findByIdAndRemove(IDTailor, function (err) {
             if (err) {
                 console.log(err)
@@ -84,13 +84,30 @@ module.exports = {
             }
         })
     },
-    filterTailor(req,res){
+    
+//    viewFindingTheTailors(req,res){
+//        
+//        res.render('searchResult',{tailor : tailor})
+//    },
+    
+    findingTheTailors(req,res){
         Tailor.find({
-        location : req.body.location,
-        priceRange : req.body.priceRange,
-        
-        }
-        )
-        
+            location : req.body.location 
+        },function(err,tailor){
+            if(err){
+                console.log(err)
+            }else{
+//                this.searched = tailor
+//                console.log(tailor)
+//                console.log("i am on POST=====" + this.searched)
+                res.render('searchResult',{tailor : tailor})
+                
+                /// this printing the right name
+//                console.log(tailor[0].name)
+                res.redirect('/tailors/result')
+            }
+        })
     }
+    
 }
+    

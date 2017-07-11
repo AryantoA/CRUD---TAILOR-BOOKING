@@ -5,36 +5,44 @@
                 <li>
                     <h1 class="h1-responsive wow fadeInUp title"><strong>Looking for your perfect Tailor within your area and budget</strong></h1></li>
                 <li>
+                   <form action="/tailors/result" method="post">
                     <div class="row wow fadeIn" data-wow-delay="0.4s">
                         <div class="col-md-3">
                             <div class="form-group md-form">
-                            <select class="form-control" id="sel1">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
+                            <select class="form-control" id="sel1" name="location">
+                                <option value="UK">UK</option>
+                                <option value="Belgium">Belgium</option>
+                                <option value="Italy">Italy</option>
+                                <option value="Asia">Asia</option>
                               </select>
                                 <label for="form1">Your Location</label>
-                            </div>
+                                 </div>
                         </div>
                         <div class="col-md-4">
                             <div class="md-form">
-                                <input type="text" id="form2" class="form-control validate">
+                                <input type="text" id="form2" class="form-control validate" name="priceRange">
                                 <label for="form2">Your Price Range</label>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="md-form">
-                                <input type="text" id="form3" class="form-control validate">
-                                <label for="form3">Your Date</label>
+                                <input type="text" id="form3" class="form-control validate" name="to">
+                                <label for="form3">Your Date to </label>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="md-form">
+                                <input type="text" id="form3" class="form-control validate" name="from">
+                                <label for="form3">Your Date from</label>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="md-form">
-                                <button class="btn btn-lg btn-danger">Search Now</button>
+                                <input type="submit">
                             </div> 
                         </div>
                     </div>
+                    </form>
                 </li>
                 <li class="payment">
                     <i class="fa fa-cc-visa fa-2x" aria-hidden="true"></i>
@@ -77,22 +85,7 @@
 
 
 
- <!-- 
-<div class="container">
-    <%tailors.forEach(function(tailor){%>
-      <div class="col-lg-3">
-        <ul>
-            <li>ID : <%= tailor.id%></li>
-            <li>Name : <%= tailor.name%></li>
-            <button><a href="/tailors/<%= tailor.id%>">More Info</a></button>
-        </ul>
-        <%})%>
-    
 
-    </div>
-    
-</div>
--->
 
     <div class="container">
 
