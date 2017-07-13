@@ -14,7 +14,7 @@ module.exports = {
         })
     },
     viewNewTailor(req, res) {
-        res.render('newTailor', {
+        res.render('tailor/newTailor', {
             Tailor
         })
     },
@@ -29,7 +29,7 @@ module.exports = {
             if (err) {
                 console.log(err)
             } else {
-                res.render('ATailor', {
+                res.render('tailor/ATailor', {
                     tailor
                 })
             }
@@ -41,7 +41,7 @@ module.exports = {
             if (err) {
                 console.log(err)
             } else {
-                res.render('updateTailor', {
+                res.render('tailor/updateTailor', {
                     tailor
                 })
             }
@@ -68,7 +68,7 @@ module.exports = {
             if (err) {
                 console.log(err)
             } else {
-                res.render('deleteTailor', {
+                res.render('tailor/deleteTailor', {
                     tailor
                 })
             }
@@ -100,11 +100,33 @@ module.exports = {
 //                this.searched = tailor
 //                console.log(tailor)
 //                console.log("i am on POST=====" + this.searched)
-                res.render('searchResult',{tailor : tailor})
+                res.render('tailor/searchResult',{tailor : tailor})
                 
                 /// this printing the right name
 //                console.log(tailor[0].name)
                 res.redirect('/tailors/result')
+            }
+        })
+        
+       // Tailor.find({}).populate('commentsTailor').exec((error,tailor) => {
+//            if (error) console.log(error)
+//            res.send(tailor)
+//        })
+    },
+    
+
+    viewBookingATailor(req,res){
+        var IDTailor = req.params.id
+        res.render("newBooking",{Tailor})
+    },
+    
+    BookingATailor(req,res){
+        var IDTailor = req.params.id
+        Tailor.save(function(err){
+            if (err){
+                console.log(err)
+            }else{
+                res
             }
         })
     }

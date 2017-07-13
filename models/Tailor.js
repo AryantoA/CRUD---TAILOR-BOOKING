@@ -30,6 +30,9 @@ var TailorSchema = new Schema({
             from: String,
             to : String
         }
+    ],
+    s :[
+        {type: Schema.Types.ObjectId, ref:'Consumer'}
     ]
 })
 //    },

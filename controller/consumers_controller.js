@@ -6,12 +6,12 @@ module.exports = {
             if(err){
                 console.log(err)
             } else{
-                res.render('ConsumersList',{consumers})
+                res.render('consumer/ConsumersList',{consumers})
             }
         })
     },
     viewNewConsumer(req,res){
-        res.render('newConsumer',{Consumer})
+        res.render('consumer/newConsumer',{Consumer})
     },
     viewAConsumer(req,res){
         var IDConsumer = req.params.id
@@ -20,7 +20,7 @@ module.exports = {
                 console.log(err)
             }
             if (consumer){
-                res.render('AConsumer',{consumer})
+                res.render('consumer/AConsumer',{consumer})
             }else {
                 res.render("No User found with that ID")
             }
@@ -34,7 +34,7 @@ module.exports = {
                 console.log(err)
             }
             if (consumer){
-                res.render('updateConsumer',{consumer})
+                res.render('consumer/updateConsumer',{consumer})
             }else {
                 res.render("No User found with that ID")
             }
@@ -48,7 +48,7 @@ module.exports = {
                 console.log(err)
             }
             if (consumer){
-                res.render('deleteConsumer',{consumer})
+                res.render('consumer/deleteConsumer',{consumer})
             }else {
                 res.render("No User found with that ID")
             }
