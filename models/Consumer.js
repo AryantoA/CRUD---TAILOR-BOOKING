@@ -25,7 +25,7 @@ var ConsumerSchema = new Schema({
 //        shirtPrice : Number,
 //        suitPrice : Number,
     },
-    commentsConsumer :[
+    tailorsBooking :[
         {type: Schema.Types.ObjectId, ref:'Tailor'}
     ]
 /// From documentation it says it will change the Uppercase to lowercase to prevent it unable to search

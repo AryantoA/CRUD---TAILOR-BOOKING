@@ -1,0 +1,58 @@
+ <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-12">
+
+                <div class="row carousel-holder">
+
+                    <div class="col-md-12">
+                        <h1>Tailor Name</h1>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <%tailors.forEach(function(tailor){%>
+                        <div class="col-sm-2 col-lg-4 col-md-4">
+                            <div class="thumbnail">
+                                <img src="https://www.royalwarrant.org/sites/default/files/styles/company_logo/public/OFFICIAL%20LOGO%20ANDERSON%26SHEPPARD.jpg?itok=ndPSpC1a" alt="">
+                                <div class="caption">
+                                    <h4 class="pull-right">$$$$</h4>
+                                    <h4>
+                                        <%= tailor.name%>
+                                            <a href="#"></a>
+                                    </h4>
+                                    <p>Since 1906, Anderson & Sheppard has upheld the traditions of Savile Row to create stunning bespoke suits for its clients.</p>
+                                </div>
+                                <div>
+                                    <ul class="list-inline intro-social-buttons">
+                                        <li>
+                                            <a href="/consumers/booking/<%=consumer%>/<%= tailor.id%>" class="btn btn-default btn-lg"><i class="fa fa-calendar fa-fw"></i> <span class="network-name">Book Now</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/tailors/<%= tailor.id%>" class="btn btn-default btn-lg"><i class="fa fa-info fa-fw"></i> <span class="network-name">More Info</span></a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                                <div class="ratings">
+                                    <p class="pull-right">15 reviews</p>
+                                    <p>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <%})%>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>

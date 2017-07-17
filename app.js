@@ -8,7 +8,7 @@ var tailors = require('./routes/tailors')
 var consumers = require('./routes/consumers')
 // Adding Authentication
 const morgan = require('morgan')
-const routes = require('./routes/routes')
+
 const cookieParser = require('cookie-parser')
 // End of Authentication 
 

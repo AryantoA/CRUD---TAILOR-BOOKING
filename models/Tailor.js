@@ -1,39 +1,37 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+const bcrypt = require('bcrypt-nodejs')
 
 var TailorSchema = new Schema({
-    name : {
-        type : String,
-        required :true,    
+    name: {
+        type: String
     },
-     address : {
-        type : String,
-        required :true,    
+    address: {
+        type: String,
     },
-     email : {
-        type : String,
-        required :true,
-        unique: true
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true
     },
-    contactNumber : {
-        type : Number,
-        unique :true
-        },
-    priceRange : {
-        type : Number,
-        },
-    location : {
-        type : String,
+    password: {
+        type: String,
+        required: true
     },
-    reserved: [
-        {
-            from: String,
-            to : String
-        }
-    ],
-    s :[
-        {type: Schema.Types.ObjectId, ref:'Consumer'}
-    ]
+    contactNumber: {
+        type: Number,
+    },
+    priceRange: {
+        type: Number,
+    },
+    location: {
+        type: String,
+    },
+    consumersBooking: {
+        type: Schema.Types.ObjectId,
+        ref: 'Consumer'
+    }
 })
 //    },
 //    //Embedded sub-document for reviews and etc
@@ -42,7 +40,34 @@ var TailorSchema = new Schema({
 //        shirtPrice : Number,
 //        suitPrice : Number,
 /// From documentation it says it will change the Uppercase to lowercase to prevent it unable to search
-    //{ runSettersOnQuery: true }
+//{ runSettersOnQuery: true }
 
+////////////////////authentication////////////////////////////////
+TailorSchema.pre('save', function (next) {
+    const user = this;
+    bcrypt.genSalt(10, function (err, salt) {
+        if (err) {
+            return next(err);
+        }
+        bcrypt.hash(user.password, salt, null, function (err, hash) {
+            if (err) {
+                return next(err);
+            }
+            user.password = hash;
+            next();
+        });
+    });
+});
 
-module.exports = mongoose.model('Tailor',TailorSchema)
+TailorSchema.methods.comparePassword = function (TailorPassword, callback) {
+
+    bcrypt.compare(TailorPassword, this.password, function (err, isMatch) {
+        if (err) {
+            return callback(err);
+        }
+
+        callback(null, isMatch);
+    });
+}
+////////////////////end of authentication////////////////////////////////
+module.exports = mongoose.model('Tailor', TailorSchema)
