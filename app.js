@@ -13,7 +13,7 @@ const cookieParser = require('cookie-parser')
 // End of Authentication 
 
 const port = process.env.PORT || 3000
-var db = 'mongodb://localhost/example';
+var db = 'mongodb://localhost/TestingOne';
 mongoose.connect(db)
 
 // Adding Authentication

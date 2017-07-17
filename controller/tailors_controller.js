@@ -12,6 +12,12 @@ module.exports = {
 
     const email = req.body.email
     const password = req.body.password
+    const name = req.body.name
+    const address = req.body.address
+    const contactNumber = req.body.contactNumber
+    const priceRange = req.body.priceRange
+    const location = req.body.location
+    const consumersBooking = req.body.consumersBooking
 
     //Send a custom error message when the email and password isn't given
     if (!email || !password) {
