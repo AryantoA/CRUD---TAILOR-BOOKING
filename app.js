@@ -6,9 +6,20 @@ var bodyParser = require("body-parser")
 var mongoose = require('mongoose')
 var tailors = require('./routes/tailors')
 var consumers = require('./routes/consumers')
+// Adding Authentication
+const morgan = require('morgan')
+const routes = require('./routes/routes')
+const cookieParser = require('cookie-parser')
+// End of Authentication 
 
+const port = process.env.PORT || 3000
 var db = 'mongodb://localhost/example';
 mongoose.connect(db)
+
+// Adding Authentication
+app.use(cookieParser())
+app.use(morgan('combined'))
+// End of Authentication
 
 app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({
@@ -18,13 +29,13 @@ app.use(express.static('public/css'))
 
 
 app.get('/', function (req, res) {
-    res.render('index')
+    res.render('consumer/index')
 })
 
 app.use('/consumers',consumers)
 app.use('/tailors',tailors)
 
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log('listening on port 3000')
 
 })
