@@ -28,10 +28,10 @@ var TailorSchema = new Schema({
     location: {
         type: String,
     },
-    consumersBooking: {
+    consumersBooking: [{
         type: Schema.Types.ObjectId,
         ref: 'Consumer'
-    }
+    }]
 })
 //    },
 //    //Embedded sub-document for reviews and etc

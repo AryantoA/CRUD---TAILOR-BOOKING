@@ -4,62 +4,86 @@ const jwt = require('jwt-simple')
 const secret = require('../config/secret')
 
 tokenForTailor = (user) => {
-  return jwt.encode({ sub: user.id }, secret)
+    return jwt.encode({
+        sub: user.id
+    }, secret)
 }
 module.exports = {
-////////////////////AUTHENTICATION////////////////////////////////////////////////////
+    ////////////////////AUTHENTICATION////////////////////////////////////////////////////
     signup(req, res, next) {
 
-    const email = req.body.email
-    const password = req.body.password
-    const name = req.body.name
-    const address = req.body.address
-    const contactNumber = req.body.contactNumber
-    const priceRange = req.body.priceRange
-    const location = req.body.location
-    const consumersBooking = req.body.consumersBooking
+        const email = req.body.email
+        const password = req.body.password
+//        const name = req.body.name
+//        const address = req.body.address
+//        const contactNumber = req.body.contactNumber
+//        const priceRange = req.body.priceRange
+//        const location = req.body.location
+//        
+        
 
-    //Send a custom error message when the email and password isn't given
-    if (!email || !password) {
-      return res.status(422).send({error: 'You must provide an email and password'})
-    }
-    // See if a user with given email exists
-    Tailor.findOne({ email }, (error, existingTailor) => {
-      if (error) { return next(error)}
+        //Send a custom error message when the email and password isn't given !name ||!address ||!contactNumber ||!priceRange ||!location ||
+        if (!email || !password) {
+            return res.status(422).send({
+                error: 'You must provide an email and password'
+            })
+        }
+        // See if a user with given email exists
+        Tailor.findOne({
+            email
+        }, (error, existingTailor) => {
+            if (error) {
+                return next(error)
+            }
 
-      // If user with email exists, return error
-      if (existingTailor) {
-        // 422 unproccesable entity
-        return res.status(422).send({ error: 'Email is already in use'})
-      }
+            // If user with email exists, return error
+            if (existingTailor) {
+                // 422 unproccesable entity
+                return res.status(422).send({
+                    error: 'Email is already in use'
+                })
+            }
 
-      // If user does not exist, create and save user
-      const tailor = new Tailor({
-        email: email,
-        password: password
-      });
+            // If user does not exist, create and save user
+            const tailor = new Tailor({
+                email: email,
+                password: password,
+//                name: name,
+//                address: address,
+//                contactNumber: contactNumber,
+//                priceRange: priceRange,
+//                location: location,
+            });
 
-      tailor.save(function(err) {
-        if (err) { return next(err); }
-        // Repond to request indicating the user was created
-        res.send('user succesfully added ' + tailor)
-      });
-    })
-  },
-  signin(req, res, next) {
-    // User has already had their email and password auth'd
-    // We need to give them a token
-    res.cookie('jwt', tokenForTailor(req.user), {maxAge: 3600000 * 24, httpOnly: false})
-//    res.send('cookie added, see if it works, after this go to the home route')
-      res.redirect('/tailors/loginLanding')
-  },
-  signout(req, res, next) {
-    // There is no way to delete a cookie from the client side. We simply set the cookie to be empty
-    res.cookie('jwt', '', {maxAge: 3600000 * 24, httpOnly: false})
-      alert('you have successfully log out')
-    res.redirect('/')
-  },
-////////////////////////////////END OF AUTHENTICATION////////////////////////////////////////////////////
+            tailor.save(function (err) {
+                if (err) {
+                    return next(err);
+                }
+                // Repond to request indicating the user was created
+                res.send('user succesfully added ' + tailor)
+            });
+        })
+    },
+    signin(req, res, next) {
+        // User has already had their email and password auth'd
+        // We need to give them a token
+        res.cookie('jwt', tokenForTailor(req.user), {
+            maxAge: 3600000 * 24,
+            httpOnly: false
+        })
+        //    res.send('cookie added, see if it works, after this go to the home route')
+        res.redirect('/tailors/')
+    },
+    signout(req, res, next) {
+        // There is no way to delete a cookie from the client side. We simply set the cookie to be empty
+        res.cookie('jwt', '', {
+            maxAge: 3600000 * 24,
+            httpOnly: false
+        })
+        alert('you have successfully log out')
+        res.redirect('/')
+    },
+    ////////////////////////////////END OF AUTHENTICATION////////////////////////////////////////////////////
     // Getting All Tailor From Database
     viewAllTailors(req, res) {
         Tailor.find({}, function (err, tailors) {
@@ -73,16 +97,20 @@ module.exports = {
         })
     },
     viewLandingLogin(req, res) {
-        res.render('tailor/loginLanding',{Tailor})
+        res.render('tailor/loginLanding', {
+            Tailor
+        })
     },
     viewNewTailor(req, res) {
-        res.render('tailor/newTailor',{Tailor})
+        res.render('tailor/newTailor', {
+            Tailor
+        })
     },
-//    newTailor(req, res) {
-//        Tailor.create(req.body)
-//        res.redirect('/tailors')
-//
-//    },
+    //    newTailor(req, res) {
+    //        Tailor.create(req.body)
+    //        res.redirect('/tailors')
+    //
+    //    },
     viewATailor(req, res) {
         var IDTailor = req.params.id
         Tailor.findById(IDTailor, function (err, tailor) {
@@ -144,61 +172,64 @@ module.exports = {
             }
         })
     },
-    
-//    viewFindingTheTailors(req,res){
-//        
-//        res.render('searchResult',{tailor : tailor})
-//    },
-    
-    findingTheTailors(req,res){
+
+    //    viewFindingTheTailors(req,res){
+    //        
+    //        res.render('searchResult',{tailor : tailor})
+    //    },
+
+    findingTheTailors(req, res) {
         Tailor.find({
-            location : req.body.location 
-        },function(err,tailor){
-            if(err){
+            location: req.body.location
+        }, function (err, tailor) {
+            if (err) {
                 console.log(err)
-            }else{
-//                this.searched = tailor
-//                console.log(tailor)
-//                console.log("i am on POST=====" + this.searched)
-                res.render('tailor/searchResult',{tailor : tailor})
-                
+            } else {
+                //                this.searched = tailor
+                //                console.log(tailor)
+                //                console.log("i am on POST=====" + this.searched)
+                res.render('tailor/searchResult', {
+                    tailor: tailor
+                })
+
                 /// this printing the right name
-//                console.log(tailor[0].name)
+                //                console.log(tailor[0].name)
                 res.redirect('/tailors/result')
             }
         })
-        
-       // Tailor.find({}).populate('commentsTailor').exec((error,tailor) => {
-//            if (error) console.log(error)
-//            res.send(tailor)
-//        })
-    },
-    
 
-    viewBookingATailor(req,res){
+        // Tailor.find({}).populate('commentsTailor').exec((error,tailor) => {
+        //            if (error) console.log(error)
+        //            res.send(tailor)
+        //        })
+    },
+
+
+    viewBookingATailor(req, res) {
         var IDTailor = req.params.id
-        res.render("newBooking",{Tailor})
+        res.render("tailor/newBooking", {
+            Tailor
+        })
     },
-    viewSignInTailor(req,res) {
-    res.render('signin')
+    viewSignInTailor(req, res) {
+        res.render('tailor/signin')
     },
-///// adding populate ////////////////    
+    ///// adding populate ////////////////    
 
 
-//////////////end of populate            
-            
-            
-//////////////////TEMPORARY BLOCK THIS DUE TO SETTING UP AUTHENTICATION ////////////////////////////////
-//    BookingATailor(req,res){
-//        var IDTailor = req.params.idTailor
-//        Tailor.save(function(err){
-//            if (err){
-//                console.log(err)
-//            }else{
-//                res
-//            }
-//        })
-//    }
-    
+    //////////////end of populate            
+
+
+    //////////////////TEMPORARY BLOCK THIS DUE TO SETTING UP AUTHENTICATION ////////////////////////////////
+    //    BookingATailor(req,res){
+    //        var IDTailor = req.params.idTailor
+    //        Tailor.save(function(err){
+    //            if (err){
+    //                console.log(err)
+    //            }else{
+    //                res
+    //            }
+    //        })
+    //    }
+
 }
-    

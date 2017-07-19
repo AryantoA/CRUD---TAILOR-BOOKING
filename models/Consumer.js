@@ -14,7 +14,7 @@ var ConsumerSchema = new Schema({
     email: {
         type: String,
         required: true,
-        unique: true,
+//        unique: true,
         lowercase: true
     },
     password: {
@@ -22,8 +22,8 @@ var ConsumerSchema = new Schema({
         required: true
     },
     contactNumber: {
-        type: Number,
-        unique: true
+        type: Number
+        
         //    },
         //    //Embedded sub-document for reviews and etc
         //    // the infomation can be display using data.detail.suitPrice
@@ -57,9 +57,9 @@ ConsumerSchema.pre('save', function (next) {
     });
 });
 
-ConsumerSchema.methods.comparePassword = function (TailorPassword, callback) {
+ConsumerSchema.methods.comparePassword = function (ConsumerPassword, callback) {
 
-    bcrypt.compare(TailorPassword, this.password, function (err, isMatch) {
+    bcrypt.compare(ConsumerPassword, this.password, function (err, isMatch) {
         if (err) {
             return callback(err);
         }
