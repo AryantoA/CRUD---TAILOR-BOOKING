@@ -8,8 +8,8 @@ const User = require('../models/Tailor')
 const passportService = require('../services/passport')
 const passport = require('passport')
 
-const requireAuth = passport.authenticate('jwt', { session: false })
-const requireSignin = passport.authenticate('local', { session: false })
+const requireAuth = passport.authenticate('jwtTailor', { session: false })
+const requireSignin = passport.authenticate('localTailor', { session: false })
 //////////////////////End of Authentication/////////////////
 
 router.get('/',TailorController.viewAllTailors)
@@ -19,9 +19,9 @@ router.get('/signin',TailorController.viewSignInTailor)
 
 
 
-router.get('/update/:id',TailorController.viewUpdateATailor)
-router.get('/delete/:id',TailorController.viewDeleteATailor)
-router.get('/login/:idTailor',TailorController.viewATailor) 
+router.get('/update/:id',requireAuth,TailorController.viewUpdateATailor)
+router.get('/delete/:id',requireAuth,TailorController.viewDeleteATailor)
+router.get('/login/:idTailor',requireAuth,TailorController.viewATailor) 
 //router.get('/result',TailorController.viewFindingTheTailors)
 
 /////////////Populated///////////
@@ -31,7 +31,7 @@ router.get('/login/:idTailor',TailorController.viewATailor)
 
 ////////end of populate ///////////
 
-router.post('/signin', requireSignin, TailorController.signin)
+router.post('/signin',requireSignin,TailorController.signin)
 router.post('/signout', TailorController.signout)
 router.post('/signup', TailorController.signup)
 router.post('/update/:id',TailorController.updateATailor)

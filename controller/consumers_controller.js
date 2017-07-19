@@ -56,12 +56,14 @@ module.exports = {
         // User has already had their email and password auth'd
         // We need to give them a token
         /// need to change the name to tokenForConsumer 19/7/2017
+        console.log("======================")
         res.cookie('jwt', tokenForConsumer(req.user), {
             maxAge: 3600000 * 24,
             httpOnly: false
         })
-            res.send('cookie added, see if it works, after this go to the home route')
-//        res.redirect('/consumer/')
+//            res.send('cookie added, see if it works, after this go to the home route')
+        var IDConsumer = req.user.id
+        res.redirect('/consumers/'+ IDConsumer)
     },
     signout(req, res, next) {
         // There is no way to delete a cookie from the client side. We simply set the cookie to be empty

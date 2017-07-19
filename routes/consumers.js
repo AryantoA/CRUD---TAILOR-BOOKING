@@ -9,19 +9,19 @@ const User = require('../models/Consumer')
 const passportService = require('../services/passportConsumer')
 const passport = require('passport')
 
-const requireAuth = passport.authenticate('jwt', { session: false })
-const requireSignin = passport.authenticate('local', { session: false })
+const requireAuth = passport.authenticate('jwtConsumer', { session: false })
+const requireSignin = passport.authenticate('localConsumer', { session: false })
 //////////////////////End of Authentication/////////////////
 //consumers
 
-router.get('/',requireAuth,ConsumerController.viewAllConsumers)
+router.get('/',ConsumerController.viewAllConsumers)
 router.get('/signin',ConsumerController.viewSignInConsumer)
 router.get('/signup',ConsumerController.viewSignUp)
-router.get('/:idConsumer',ConsumerController.viewAConsumer)
-router.get('/update/:idConsumer',ConsumerController.viewUpdateAConsumer)
-router.get('/delete/:idConsumer',ConsumerController.viewDeleteAConsumer)
-router.get('/booking/:idConsumer',ConsumerController.viewAllTailors)
-router.get('/booking/:idConsumer/:id',ConsumerController.viewSelectedTailor)
+router.get('/:idConsumer',requireAuth,ConsumerController.viewAConsumer)
+router.get('/update/:idConsumer',requireAuth,ConsumerController.viewUpdateAConsumer)
+router.get('/delete/:idConsumer',requireAuth,ConsumerController.viewDeleteAConsumer)
+router.get('/booking/:idConsumer',requireAuth,ConsumerController.viewAllTailors)
+router.get('/booking/:idConsumer/:id',requireAuth,ConsumerController.viewSelectedTailor)
 
 /////////////Authentication ////////////
 

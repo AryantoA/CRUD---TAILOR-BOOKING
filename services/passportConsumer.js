@@ -7,7 +7,7 @@ const LocalStrategy = require('passport-local')
 // local stategy, auth user using email and password, local refers to local database
 // Create local Strategy
 const localOptions = { usernameField: 'email' };
-const localLogin = new LocalStrategy(localOptions, function(email, password, done) {
+const localLoginConsumer = new LocalStrategy(localOptions, function(email, password, done) {
   // Verify this email and password, call done with the user
   // if it is the correct email and password
   // otherwise, call done with false
@@ -49,7 +49,7 @@ const jwtOptions = {
 // create JWT Strategy
 // Payload is decoded JWT token
 // Done is callback function that we need to call in order to succesfully auth user
-const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
+const jwtLoginConsumer = new JwtStrategy(jwtOptions, (payload, done) => {
   // See if user ID in payload exists in DB
   // If it does call Done
   // Otherwise, call done with a user object
@@ -66,5 +66,5 @@ const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
 })
 
 //Tell passport to use this strategy
-passport.use(jwtLogin)
-passport.use(localLogin)
+passport.use('jwtConsumer',jwtLoginConsumer)
+passport.use('localConsumer',localLoginConsumer)

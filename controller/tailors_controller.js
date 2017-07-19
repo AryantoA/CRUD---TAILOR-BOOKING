@@ -65,14 +65,17 @@ module.exports = {
         })
     },
     signin(req, res, next) {
+        console.log("====================================")
         // User has already had their email and password auth'd
         // We need to give them a token
+        console.log(req.user)
         res.cookie('jwt', tokenForTailor(req.user), {
             maxAge: 3600000 * 24,
             httpOnly: false
         })
+        IDTailor = req.user._id
         //    res.send('cookie added, see if it works, after this go to the home route')
-        res.redirect('/tailors/')
+        res.redirect('/tailors/login/'+IDTailor)
     },
     signout(req, res, next) {
         // There is no way to delete a cookie from the client side. We simply set the cookie to be empty
@@ -80,7 +83,7 @@ module.exports = {
             maxAge: 3600000 * 24,
             httpOnly: false
         })
-        alert('you have successfully log out')
+       
         res.redirect('/')
     },
     ////////////////////////////////END OF AUTHENTICATION////////////////////////////////////////////////////
@@ -112,28 +115,33 @@ module.exports = {
     //
     //    },
     viewATailor(req, res) {
-        var IDTailor = req.params.id
-        Tailor.findById(IDTailor, function (err, tailor) {
-            if (err) {
-                console.log(err)
-            } else {
-                res.render('tailor/ATailor', {
-                    tailor
-                })
-            }
-        })
+        res.render('tailor/ATailor', { tailor : req.user})
+
+//        console.log(req.params.idTailor)
+//        var IDTailor = req.params.idTailor
+//        Tailor.findById(IDTailor, function (err, tailor) {
+//            if (err) {
+//                console.log(err)
+//            } else {
+//                console.log(tailor)
+//                res.render('tailor/ATailor', {
+//                    tailor
+//                })
+//            }
+//        })
     },
     viewUpdateATailor(req, res) {
-        var IDTailor = req.params.id
-        Tailor.findById(IDTailor, function (err, tailor) {
-            if (err) {
-                console.log(err)
-            } else {
-                res.render('tailor/updateTailor', {
-                    tailor
-                })
-            }
-        })
+        res.render('tailor/updateTailor', {tailor: req.user})
+//        var IDTailor = req.params.id
+//        Tailor.findById(IDTailor, function (err, tailor) {
+//            if (err) {
+//                console.log(err)
+//            } else {
+//                res.render('tailor/updateTailor', {
+//                    tailor
+//                })
+//            }
+//        })
     },
     updateATailor(req, res) {
         var IDTailor = req.params.id

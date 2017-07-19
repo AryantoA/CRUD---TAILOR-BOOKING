@@ -1,5 +1,5 @@
 const passport = require('passport')
-const User = require('../models/Tailor')
+const Tailor = require('../models/Tailor')
 const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt
 const secret = require('../config/secret')
@@ -7,21 +7,21 @@ const LocalStrategy = require('passport-local')
 // local stategy, auth user using email and password, local refers to local database
 // Create local Strategy
 const localOptions = { usernameField: 'email' };
-const localLogin = new LocalStrategy(localOptions, function(email, password, done) {
+const localLoginTailor = new LocalStrategy(localOptions, function(email, password, done) {
   // Verify this email and password, call done with the user
   // if it is the correct email and password
   // otherwise, call done with false
-  User.findOne({ email: email }, function(err, user) {
+  Tailor.findOne({ email: email }, function(err, tailor) {
     if (err) { return done(err); }
-    if (!user) { return done(null, false); }
+    if (!tailor) { return done(null, false); }
 
     // compare passwords - is `password` equal to user.password?
-    user.comparePassword(password, function(err, isMatch) {
+    tailor.comparePassword(password, function(err, isMatch) {
       if (err) { return done(err); }
       if (!isMatch) { return done(null, false); }
 
       // if succesfull passport will make user available under req.user
-      return done(null, user);
+      return done(null, tailor);
     });
   });
 });
@@ -49,15 +49,15 @@ const jwtOptions = {
 // create JWT Strategy
 // Payload is decoded JWT token
 // Done is callback function that we need to call in order to succesfully auth user
-const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
+const jwtLoginTailor = new JwtStrategy(jwtOptions, (payload, done) => {
   // See if user ID in payload exists in DB
   // If it does call Done
   // Otherwise, call done with a user object
-  User.findById(payload.sub, (error, user) => {
+  Tailor.findById(payload.sub, (error, tailor) => {
     if (error) { return done(error, false) }
 
-    if (user) {
-      done (null, user)
+    if (tailor) {
+      done (null, tailor)
     } else {
       // no error in process of searching user but we did not find a user
       done (null, false)
@@ -66,5 +66,5 @@ const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
 })
 
 //Tell passport to use this strategy
-passport.use(jwtLogin)
-passport.use(localLogin)
+passport.use('jwtTailor',jwtLoginTailor)
+passport.use('localTailor',localLoginTailor)
