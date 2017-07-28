@@ -31,11 +31,12 @@ var ConsumerSchema = new Schema({
         //        shirtPrice : Number,
         //        suitPrice : Number,
     },
-    tailorsBooking: [
-        {
-            type: Schema.Types.ObjectId,
+    tailorsBooking: [{
+        dateOfBooking : {type : String},
+        timeOfBooking : {type : String},
+        bookedBy : {   type: Schema.Types.ObjectId,
             ref: 'Tailor'
-        }
+        }}
     ]
     /// From documentation it says it will change the Uppercase to lowercase to prevent it unable to search
     //{ runSettersOnQuery: true }

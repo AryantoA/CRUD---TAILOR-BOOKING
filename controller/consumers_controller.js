@@ -14,6 +14,11 @@ module.exports = {
 
         const email = req.body.email
         const password = req.body.password
+        const name = req.body.name
+        const location = req.body.location
+        const contactNumber = req.body.contactNumber
+
+
 
         //Send a custom error message when the email and password isn't given
         if (!email || !password) {
@@ -26,6 +31,7 @@ module.exports = {
             email
         }, (error, existingConsumer) => {
             if (error) {
+                console.log("AqqqqqqqqqGG")
                 return next(error)
             }
 
@@ -39,16 +45,25 @@ module.exports = {
 
             // If user does not exist, create and save user
             const consumer = new Consumer({
+                name: name,
+                location: location,
                 email: email,
+                contactNumber: contactNumber,
                 password: password
             });
 
             consumer.save(function (err) {
                 if (err) {
+                    console.log(err)
+                    console.log("ARGGGGGGGGGGG")
                     return next(err);
+                } else {
+                    console.log("Aaaaaaaaaaaaaaaaaaaaaa")
+                    // Repond to request indicating the user was created
+                    res.redirect('/consumers/success')
+                    //res.render('consumer/successfullyCreateAccount',{consumer})
+                    //res.send('user succesfully added ' + consumer)
                 }
-                // Repond to request indicating the user was created
-                res.send('user succesfully added ' + consumer)
             });
         })
     },
@@ -57,13 +72,15 @@ module.exports = {
         // We need to give them a token
         /// need to change the name to tokenForConsumer 19/7/2017
         console.log("======================")
+        console.log(req.user)
+        console.log("======================")
         res.cookie('jwt', tokenForConsumer(req.user), {
             maxAge: 3600000 * 24,
             httpOnly: false
         })
-//            res.send('cookie added, see if it works, after this go to the home route')
-        var IDConsumer = req.user.id
-        res.redirect('/consumers/'+ IDConsumer)
+        //            res.send('cookie added, see if it works, after this go to the home route')
+        var IDConsumer = req.user._id
+        res.redirect('/consumers/checkin/' + IDConsumer)
     },
     signout(req, res, next) {
         // There is no way to delete a cookie from the client side. We simply set the cookie to be empty
@@ -145,7 +162,7 @@ module.exports = {
                 console.log(err)
             } else {
                 console.log(createdConsumerObject)
-                res.redirect('/Consumers')
+                res.redirect('/Consumers/sign')
             }
         })
     },
@@ -161,7 +178,7 @@ module.exports = {
                 console.log(err)
             } else {
                 console.log(updateInfo)
-                res.redirect('/Consumers/' + IDConsumer)
+                res.redirect('/Consumers/checkin/' + IDConsumer)
             }
         })
     },
@@ -175,8 +192,22 @@ module.exports = {
             }
         })
     },
-    viewAllTailors(req, res) {
+    viewStep1Booking(req, res) {
         var IDConsumer = req.params.idConsumer
+        var IDTailor = req.params.id
+        var Date = req.body.date
+        var Time = req.body.time
+
+        /////////////////WORKING ON THIS 27/7/17//// adding the booking feature
+        //        Tailor.findById(IDTailor,function(err,Tailor){
+        //            if (err){
+        //                console.log(err)
+        //            }else{
+        //            
+        //                    
+        //                }
+        //            }
+        //        })
 
         Tailor.find({}, function (err, tailors) {
             if (err) {
@@ -189,9 +220,67 @@ module.exports = {
             }
         })
     },
-    viewSelectedTailor(req, res) {
+    /////////////////WORKING ON THIS 27/7/17
+    viewStep2Booking(req,res){
+      var IDConsumer = req.params.idConsumer
+        var IDTailor = req.params.id
+    res.render('consumer/bookingAnAppointment',{IDConsumer,IDTailor})    
+    },
+    step2Booking(req, res) {
         var IDConsumer = req.params.idConsumer
         var IDTailor = req.params.id
+        var Date = req.body.date
+        console.log(Date)
+        console.log(typeof(Date))
+        var Time = req.body.time
+//        var TailorObject = new TailorObject({
+//            "bookedBy": IDConsumer,
+//            "dateOfBooking": Date,
+//            "timeOfBooking": Time
+//        })
+        var CustomerObject = {
+            "bookedBy": IDTailor,
+            "dateOfBooking": Date,
+            "timeOfBooking": Time
+        }
+        
+        //var CustomerObject = [IDTailor,Date,Time]
+        
+        Consumer.findById(IDConsumer, function (err, foundUser) {
+            if (err) {
+                console.log(err)
+            } else {
+                foundUser.tailorsBooking.push(CustomerObject);
+                foundUser.save(function (err, data) {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        Tailor.findByIdAndUpdate(IDTailor, {
+                            $push: {
+                                consumersBooking: IDConsumer
+                            }
+                        }, function (err, data) {
+                            if (err) {
+                                console.log(err)
+                            } else {
+                                Consumer.findById(IDConsumer).populate('Tailor').exec((error, tailors) => {
+                                    if (error) console.log(error)
+                                    res.render('consumer/selectedTailor', {
+                                        tailors: tailors
+                                    })
+                                })
+                            }
+                        })
+                    }
+                })
+            }
+        })
+                   },
+    viewStep3Booking(req, res) {
+        var IDConsumer = req.params.idConsumer
+        var IDTailor = req.params.id
+        var Date = req.body.date
+        var Time = req.body.time
         Consumer.findById(IDConsumer, function (err, foundUser) {
             if (err) {
                 console.log(err)
@@ -241,6 +330,13 @@ module.exports = {
 
 
 
+    },
+
+    viewSuccessCreateAccount(req, res) {
+        res.render('consumer/successfullyCreateAccount')
+    },
+    viewMakingBookingDate(req, res) {
+        res.render('consumer/bookingadate')
     },
     viewSignInConsumer(req, res) {
         res.render('consumer/signin')

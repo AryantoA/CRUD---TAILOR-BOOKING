@@ -18,7 +18,7 @@ mongoose.connect(db)
 
 // Adding Authentication
 app.use(cookieParser())
-app.use(morgan('combined'))
+//app.use(morgan('combined'))
 // End of Authentication
 
 app.set('view engine', 'ejs')

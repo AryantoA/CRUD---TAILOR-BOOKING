@@ -88,13 +88,12 @@ hr{
 input[type="text"]:focus:not([readonly]) {
 	border-color:#C00;
 	box-shadow:0 1px 0 0 #C00;
-	color:#fff;
+	color:#008080;
 }
 
 input[type="text"]:not([readonly])+label {
 	color:rgba(255,255,255,.65);
 }
 
-input[type="text"]:focus:not([readonly])+label {
-	color:#fff;
-}
+input{color:#008080}
+

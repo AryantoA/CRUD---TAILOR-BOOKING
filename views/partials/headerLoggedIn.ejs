@@ -35,9 +35,13 @@
       
       
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/consumers/signup">Sign Up</a></li>
-        <li><a href="/consumers/signin">Login</a></li>
-        <li><a href="/tailors/">I'm Tailor</a></li>
+        <li><a href="/consumers/">Account</a></li>
+        <li><a href="/update/:idConsumer"><%= consumer.name%></a></li>
+        <li>
+                <form action="/consumers/signout" method="post">
+        <input type="submit" value="Signout">
+    </form>
+        </li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

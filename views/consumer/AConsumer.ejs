@@ -1,4 +1,8 @@
-<ul>
+<%include ../partials/headerLoggedIn %>
+
+   
+
+   <ul>
     <li>ID :
         <%= consumer.id%>
     </li>
@@ -8,6 +12,7 @@
     <li>Location :
         <%= consumer.location%>
     </li>
+    <li>Email : <%= consumer.email%></li>
     <li>Contact Number :
         <%= consumer.contactNumber%>
     </li>
@@ -17,3 +22,7 @@
 <button><a href="/consumers/update/<%= consumer.id%>">update</a></button>
 <button><a href="/consumers/booking/<%= consumer.id%>">booking</a></button>
 <button><a href="/consumers/">Home</a></button>
+
+
+
+<%include ../partials/footer %>

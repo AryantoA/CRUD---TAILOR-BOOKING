@@ -1,7 +1,18 @@
-<form action="/consumers/update/<%= consumer.id%>"method="post">
+<%include ../partials/header %>
+
+
+
+   
+
+   <form action="/consumers/update/<%= consumer.id%>"method="post">
     <input type="text" name="name" value="<%=consumer.name%>">
     <input type="text" name="location" value="<%=consumer.location%>">
     <input type="text" name="email" value="<%=consumer.email%>">
     <input type="number" name="contactNumber" value="<%=consumer.contactNumber%>">
     <input type="submit" name="Submit" value="submit">
 </form>   
+
+
+
+
+<%include ../partials/footer %>
