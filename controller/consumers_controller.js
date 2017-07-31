@@ -1,5 +1,6 @@
 const Consumer = require('../models/Consumer')
 const Tailor = require('../models/Tailor')
+const Booking = require('../models/Booking')
 const jwt = require('jwt-simple')
 const secret = require('../config/secret')
 
@@ -221,31 +222,36 @@ module.exports = {
         })
     },
     /////////////////WORKING ON THIS 27/7/17
-    viewStep2Booking(req,res){
-      var IDConsumer = req.params.idConsumer
+    viewStep2Booking(req, res) {
+        var IDConsumer = req.params.idConsumer
         var IDTailor = req.params.id
-    res.render('consumer/bookingAnAppointment',{IDConsumer,IDTailor})    
+        res.render('consumer/bookingAnAppointment', {
+            IDConsumer,
+            IDTailor
+        })
     },
     step2Booking(req, res) {
         var IDConsumer = req.params.idConsumer
         var IDTailor = req.params.id
         var Date = req.body.date
-        console.log(Date)
-        console.log(typeof(Date))
         var Time = req.body.time
-//        var TailorObject = new TailorObject({
-//            "bookedBy": IDConsumer,
-//            "dateOfBooking": Date,
-//            "timeOfBooking": Time
-//        })
+        console.log(Date)
+        console.log(typeof (Date))
+
+        //        var TailorObject = new TailorObject({
+        //            "bookedBy": IDConsumer,
+        //            "dateOfBooking": Date,
+        //            "timeOfBooking": Time
+        //        })
         var CustomerObject = {
-            "bookedBy": IDTailor,
             "dateOfBooking": Date,
-            "timeOfBooking": Time
+            "timeOfBooking": Time,
+            "consumerId": IDConsumer,
+            "tailorId": IDTailor
         }
-        
+
         //var CustomerObject = [IDTailor,Date,Time]
-        
+
         Consumer.findById(IDConsumer, function (err, foundUser) {
             if (err) {
                 console.log(err)
@@ -275,63 +281,141 @@ module.exports = {
                 })
             }
         })
-                   },
-    viewStep3Booking(req, res) {
+    },
+  
+
+    ///// CRUD FOR BOOKING /// 31-07-2017
+    viewConsumerCreateABooking(req, res) {
+        var IDConsumer = req.params.idConsumer
+        var IDTailor = req.params.id
+        res.render('consumer/bookingAnAppointment', {
+            IDConsumer,
+            IDTailor
+        })
+    },
+    consumerCreateABooking(req, res) {
         var IDConsumer = req.params.idConsumer
         var IDTailor = req.params.id
         var Date = req.body.date
         var Time = req.body.time
-        Consumer.findById(IDConsumer, function (err, foundUser) {
+        var CustomerObject = {
+            "dateOfBooking": Date,
+            "timeOfBooking": Time,
+            "consumerId": IDConsumer,
+            "tailorId": IDTailor
+        }
+        var booking = new Booking(CustomerObject);
+        booking.save(function (err, createBookingObject) {
+                if (err) {
+                    res.send(err)
+                } else {
+                    Consumer.findById(IDConsumer, function (err, foundUser) {
+                        if (err) {
+                            console.log(err)
+                        } else {
+                            foundUser.tailorsBooking.push(createBookingObject);
+                            foundUser.save(function (err, data) {
+                                if (err) {
+                                    console.log(err)
+                                } else {
+                                    Tailor.findByIdAndUpdate(IDTailor, {
+                                        $push: {
+                                            consumersBooking: createBookingObject
+                                        }
+                                    }, function (err, data) {
+                                        if (err) {
+                                            console.log(err)
+                                        } else {
+                                            Consumer.findById(IDConsumer).populate('Tailor').exec((error, tailors) => {
+                                                if (error) console.log(error)
+                                                res.render('consumer/selectedTailor', {
+                                                    tailors: tailors
+                                                })
+                                            })
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    })
+                }
+        })},
+    viewConsumerUpdateABooking(req,res){
+        var IDConsumer = req.params.idConsumer
+        var IDBooking = req.params.idBooking
+        Booking.findById(IDBooking, function (err, booking) {
+            if (err) {
+                console.log(err)
+            }
+            if (booking) {
+                res.render('booking/updateBooking', {
+                    booking,IDConsumer
+                })
+            } else {
+                res.render("No Booking found with that ID")
+            }
+        })
+
+    },
+    
+    consumerUpdateABooking(req,res){
+        var IDConsumer = req.params.idConsumer
+        var IDBooking = req.params.idBooking
+        Booking.findByIdAndUpdate(IDBooking, {
+           "dateOfBooking": req.body.date,
+            "timeOfBooking": req.body.time
+        }, function (err, updateBooking) {
             if (err) {
                 console.log(err)
             } else {
-                foundUser.tailorsBooking.push(IDTailor);
-                foundUser.save(function (err, data) {
-                    if (err) {
-                        console.log(err)
-                    } else {
-                        Tailor.findByIdAndUpdate(IDTailor, {
-                            $push: {
-                                consumersBooking: IDConsumer
-                            }
-                        }, function (err, data) {
-                            if (err) {
-                                console.log(err)
-                            } else {
-                                Consumer.findById(IDConsumer).populate('Tailor').exec((error, tailors) => {
-                                    if (error) console.log(error)
-                                    res.render('consumer/selectedTailor', {
-                                        tailors: tailors
-                                    })
-                                })
-                            }
-                        })
-                    }
+                console.log(updateBooking)
+                res.redirect('/Consumers')
+            }
+        })},
+    
+    viewConsumerAllBooking(req,res){
+        var IDConsumer = req.params.idConsumer
+        Booking.find({consumerId: IDConsumer}, function (err, consumerBooking) {
+            if (err) {
+                console.log(err)
+            }
+            if (consumerBooking) {
+//                res.send(consumerBooking)
+                res.render('booking/AllConsumerBooking', {
+                    consumerBooking:consumerBooking
                 })
+            } else {
+                res.send("No User found with that ID")
             }
         })
-        /////OPTION 1 FOR PUSHING TO TAILOR ///////
-        //        Tailor.findById(IDTailor, function (err, foundUser) {
-        //            if (err) {
-        //                console.log(err)
-        //            } else {
-        //                foundUser.consumersBooking.push(IDConsumer);
-        //                foundUser.save(function (err, data) {
-        //                    if (err) {
-        //                        console.log(err)
-        //                    } else {
-        //                        console.log(data)
-        //                    }
-        //                })
-        //            }
-        //        })
-        ////////////////////////////////////////
-
-
-
 
     },
-
+    deleteABooking(req,res){
+        var IDBooking = req.params.idBooking
+        var IDConsumer = req.params.idConsumer
+        Booking.findByIdAndRemove(IDBooking, function (err) {
+            if (err) {
+                console.log(err)
+            } else {
+                res.redirect('/Consumers/booking/'+IDConsumer)
+            }
+        })
+    },
+    viewDeleteABooking(req,res){
+        var IDBooking = req.params.idBooking
+        Booking.findById(IDBooking, function (err, booking) {
+            if (err) {
+                console.log(err)
+            }
+            if (booking) {
+                res.render('booking/deleteABooking', {
+                    Booking : booking
+                })
+            } else {
+                res.render("No Booking found with that ID")
+            }
+        })
+    },
     viewSuccessCreateAccount(req, res) {
         res.render('consumer/successfullyCreateAccount')
     },

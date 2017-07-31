@@ -30,7 +30,7 @@ var TailorSchema = new Schema({
     },
     consumersBooking: [{
         type: Schema.Types.ObjectId,
-        ref: 'Consumer'
+        ref: 'Booking'
     }]
 })
 //    },
