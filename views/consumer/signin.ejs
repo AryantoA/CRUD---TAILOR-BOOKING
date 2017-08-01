@@ -1,11 +1,41 @@
 <%include ../partials/header %>
 
+    <div class="container">
+        <div class>
 
+            <div class>
+                <form action="/consumers/signin" method="POST">
+                    <p class="h5 text-center mb-4">Sign in</p>
+
+                    <div class="md-form">
+                        <i class="fa fa-envelope prefix grey-text"></i>
+                        <input type="text" name="email" id="defaultForm-email" class="form-control">
+                        <label for="defaultForm-email">Your email</label>
+                    </div>
+
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix grey-text"></i>
+                        <input type="password" name="password" id="defaultForm-pass" class="form-control">
+                        <label for="defaultForm-pass">Your password</label>
+                    </div>
+
+                    <div class="text-center">
+                        <input class="btn btn-default" type="submit" name="Login">
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!--
   <form action="/consumers/signin" method="POST">
    <input type="text" name="email" placeholder="Add Consumer email">
    <input type="password" name="password" placeholder="Enter your password"> 
-    <input type="submit" name= "submit">     
+    <input class="btn btn-default" type="submit" name= "Login">     
 </form>   
+-->
 
 
-<%include ../partials/footer %>
+    <%include ../partials/footer %>

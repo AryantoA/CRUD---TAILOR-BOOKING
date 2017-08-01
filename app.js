@@ -32,6 +32,7 @@ app.get('/', function (req, res) {
     res.render('consumer/index')
 })
 
+
 app.use('/consumers',consumers)
 app.use('/tailors',tailors)
 

@@ -58,6 +58,8 @@
             <li>Email : <%= tailor.email%></li>
             <button><a href="/tailors/update/<%= tailor.id%>">update</a></button>
             <button><a href="/tailors/delete/<%= tailor.id%>">delete</a></button>
+            <button><a href="/tailors/booking/<%= tailor.id%>">View all Booking</a></button>
+            <button><a href="/tailors/booking/create/<%= tailor.id%>">Make Appointment for Walk In</a></button>
         </ul>
     
  <form action="/tailors/signout" method="post">

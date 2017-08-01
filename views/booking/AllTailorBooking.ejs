@@ -1,0 +1,36 @@
+<%include ../partials/header %>
+
+
+
+    <div class="container">
+        <%TailorBooking.forEach(function(Booking){%>
+            <div class="col-lg-3">
+                <ul>
+                    <li>Booking ID :
+                        <%= Booking.id%>
+                    </li>
+                    <li>Date of Booking :
+                        <%= Booking.dateOfBooking%>
+                    </li>
+                    <li>Time of Booking :
+                        <%= Booking.timeOfBooking%>
+                    </li>
+                    <li>Consumer ID :
+                        <%= Booking.consumerId%>
+                    </li>
+                    <li>Tailor ID :
+                        <%= Booking.tailorId%>
+                    </li>
+                    <button><a href="/tailors/booking/update/<%= Booking.consumerId%>/<%= Booking.id%>">Update Booking</a></button>
+                    <button><a href="/tailors/booking/delete/<%= Booking.consumerId%>/<%= Booking.id%>">Reject Booking</a></button>
+                </ul>
+                <%})%>
+
+
+            </div>
+            <form action="/tailors/signout" method="post">
+                <input type="submit" value="Signout">
+            </form>
+
+    </div>
+    <%include ../partials/footer %>

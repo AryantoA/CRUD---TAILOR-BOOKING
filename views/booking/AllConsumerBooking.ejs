@@ -1,37 +1,37 @@
 <%include ../partials/header %>
 
+<div class="container">
+  <h2>Booking</h2>
+  <p>All the booking made</p>            
+  <table class="table table-hover">
+     <thead class="blue-grey lighten-4">
+      <tr>
+        <th>Booking ID</th>
+        <th>Date of Booking</th>
+        <th>Time of Booking</th>
+        <th>Consumer ID</th>
+        <th>Tailor ID</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+     <%consumerBooking.forEach(function(Booking){%>
+      <tr>
+        <td><%= Booking.id%></td>
+        <td><%= Booking.dateOfBooking%></td>
+        <td><%= Booking.timeOfBooking%></td>
+        <td><%= Booking.consumerId%></td>
+        <td><%= Booking.tailorId%></td>
+        <td><button><a href="/consumers/booking/update/<%= Booking.consumerId%>/<%= Booking.id%>">Update Booking</a></button></td>
+        <td><button><a href="/consumers/booking/delete/<%= Booking.consumerId%>/<%= Booking.id%>">Delete  Booking</a></button></td>
+        <td><button><a href="/consumers/<%= Booking.consumerId%>">More Info</a></button></td>
+      </tr>
+      <%})%>
+    </tbody>
+  </table>
+</div>
 
 
-    <div class="container">
-        <%consumerBooking.forEach(function(Booking){%>
-            <div class="col-lg-3">
-                <ul>
-                    <li>Booking ID :
-                        <%= Booking.id%>
-                    </li>
-                    <li>Date of Booking :
-                        <%= Booking.dateOfBooking%>
-                    </li>
-                    <li>Time of Booking :
-                        <%= Booking.timeOfBooking%>
-                    </li>
-                    <li>Consumer ID :
-                        <%= Booking.consumerId%>
-                    </li>
-                    <li>Tailor ID :
-                        <%= Booking.tailorId%>
-                    </li>
-                    <button><a href="/consumers/booking/update/<%= Booking.consumerId%>/<%= Booking.id%>">Update Booking</a></button>
-                    <button><a href="/consumers/booking/delete/<%= Booking.consumerId%>/<%= Booking.id%>">Delete  Booking</a></button>
-                    <button><a href="/consumers/<%= Booking.consumerId%>">More Info</a></button>
-                </ul>
-                <%})%>
-
-
-            </div>
-            <form action="/consumers/signout" method="post">
-                <input type="submit" value="Signout">
-            </form>
-
-    </div>
     <%include ../partials/footer %>

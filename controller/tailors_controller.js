@@ -1,5 +1,6 @@
 const Tailor = require('../models/Tailor')
 const Consumer = require('../models/Consumer')
+const Booking = require('../models/Booking')
 const jwt = require('jwt-simple')
 const secret = require('../config/secret')
 
@@ -93,7 +94,7 @@ module.exports = {
             if (err) {
                 console.log(err)
             } else {
-                res.render('homepage', {
+                res.render('HomeCustomer', {
                     tailors
                 })
             }
@@ -222,22 +223,20 @@ module.exports = {
     viewSignInTailor(req, res) {
         res.render('tailor/signin')
     },
-    ///// adding populate ////////////////    
-
-
-    //////////////end of populate            
-
-
-    //////////////////TEMPORARY BLOCK THIS DUE TO SETTING UP AUTHENTICATION ////////////////////////////////
-    //    BookingATailor(req,res){
-    //        var IDTailor = req.params.idTailor
-    //        Tailor.save(function(err){
-    //            if (err){
-    //                console.log(err)
-    //            }else{
-    //                res
-    //            }
-    //        })
-    //    }
+    viewBooking(req,res){
+       var IDTailor = req.params.id
+       Booking.find({tailorId: IDTailor}, function(err,TailorBooking){
+           if(err){
+               console.log(err)
+           }
+           if (TailorBooking){
+               console.log(TailorBooking)
+               res.send(TailorBooking)
+               //res.render('booking/AllTailorBooking',{ TailorBooking:TailorBooking})
+           } else{
+               res.send("No Booking found with that ID")
+           }
+       })
+    }
 
 }

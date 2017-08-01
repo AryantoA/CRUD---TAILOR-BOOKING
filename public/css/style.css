@@ -1,5 +1,5 @@
 body{
-    background: blue;
+    background: #999999;
     background-size: cover;
     background-position: center;
     font-family: 'Work Sans', sans-serif;
@@ -54,6 +54,13 @@ html{
 h1{
     font-weight: 700;
     font-size: 5em;
+        
+}
+.container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 hr{
@@ -64,7 +71,7 @@ hr{
 /* YOUR CUSTOM STYLES */
 
 .view {
-	background: url("http://mdbootstrap.com/img/Photos/Horizontal/Food/full%20page/9.jpg")no-repeat center center;
+	background: url("https://www.permanentstyle.com/wp-content/uploads/2016/02/Sartoria-Dalcuore-Naples-bespoke-suit.jpg")no-repeat center center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;

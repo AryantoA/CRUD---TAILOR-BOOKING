@@ -1,15 +1,18 @@
-<% include ./partials/headerTailor %>
+<% include ./partials/header %>
     <div class="view hm-black-light">
         <div class="full-bg-img flex-center pattern-4">
             <ul>
+               <li></li>
                 <li>
-                    <h1 class="h1-responsive wow fadeInUp title"><strong>Looking for your perfect Tailor within your area and budget</strong></h1></li>
+                    <h1 class="h1-responsive wow fadeInUp title text-center"><strong>Bespoke Tailor Comparison Site</strong></h1></li>
+                    <h3 class="h1-responsive wow fadeInUp title text-center">Looking for your perfect Tailor within your area and budget</h3>
                 <li>
                    <form action="/tailors/result" method="post">
-                    <div class="row wow fadeIn" data-wow-delay="0.4s">
+                    <div class=" row wow fadeIn text-center" data-wow-delay="0.4s">
+                        <div class="row">
                         <div class="col-md-3">
                             <div class="form-group md-form">
-                            <select class="form-control" id="sel1" name="location">
+                            <select class="form-control " id="sel1" name="location">
                                 <option value="UK">UK</option>
                                 <option value="Belgium">Belgium</option>
                                 <option value="Italy">Italy</option>
@@ -36,18 +39,16 @@
                                 <label for="form3">Your Date from</label>
                             </div>
                         </div>
+                        </div>
+                        <div class="row">
                         <div class="col-md-3">
                             <div class="md-form">
                                 <input type="submit">
                             </div> 
                         </div>
+                        </div>
                     </div>
                     </form>
-                </li>
-                <li class="payment">
-                    <i class="fa fa-cc-visa fa-2x" aria-hidden="true"></i>
-                    <i class="fa fa-cc-mastercard fa-2x" aria-hidden="true"></i>
-                    <i class="fa fa-money fa-2x" aria-hidden="true"></i>
                 </li>
             </ul>
         </div>

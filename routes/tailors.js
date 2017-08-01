@@ -21,7 +21,9 @@ router.get('/signin',TailorController.viewSignInTailor)
 
 router.get('/update/:id',requireAuth,TailorController.viewUpdateATailor)
 router.get('/delete/:id',requireAuth,TailorController.viewDeleteATailor)
-router.get('/login/:idTailor',requireAuth,TailorController.viewATailor) 
+router.get('/login/:idTailor',requireAuth,TailorController.viewATailor)
+router.get('/booking/:idTailor',requireAuth,TailorController.viewBooking) 
+
 //router.get('/result',TailorController.viewFindingTheTailors)
 
 /////////////Populated///////////
@@ -32,6 +34,7 @@ router.get('/login/:idTailor',requireAuth,TailorController.viewATailor)
 ////////end of populate ///////////
 
 router.post('/signin',requireSignin,TailorController.signin)
+//router.post('/booking/:idTailor',TailorController.Booking) 
 router.post('/signout', TailorController.signout)
 router.post('/signup', TailorController.signup)
 router.post('/update/:id',TailorController.updateATailor)
